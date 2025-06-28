@@ -7,7 +7,7 @@ import { SearchResult } from './types'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -25,7 +25,7 @@ interface MessageData {
   ticker?: string
 }
 
-export default function FireplexityPage() {
+function FireplexityPageContent() {
   const [sources, setSources] = useState<SearchResult[]>([])
   const [followUpQuestions, setFollowUpQuestions] = useState<string[]>([])
   const [searchStatus, setSearchStatus] = useState('')
@@ -351,5 +351,13 @@ export default function FireplexityPage() {
         </DialogContent>
       </Dialog>
     </div>
+  )
+}
+
+export default function FireplexityPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <FireplexityPageContent />
+    </Suspense>
   )
 }

@@ -9,46 +9,60 @@ interface TradingViewWidgetProps {
 
 function TradingViewWidget({ symbol, theme = 'light' }: TradingViewWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const widgetIdRef = useRef<string>(`tradingview_${Math.random().toString(36).substr(2, 9)}`)
 
   useEffect(() => {
     if (!containerRef.current) return
 
+    const containerId = widgetIdRef.current
+
     // Clear any existing content
-    containerRef.current.innerHTML = `
-      <div class="tradingview-widget-container__widget" style="height: 100%; width: 100%;"></div>
-      <div class="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
-          <span class="blue-text">Track all markets on TradingView</span>
-        </a>
-      </div>
-    `
+    containerRef.current.innerHTML = `<div id="${containerId}" style="height: 100%; width: 100%;"></div>`
 
-    const script = document.createElement('script')
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js'
-    script.type = 'text/javascript'
-    script.async = true
-    script.innerHTML = JSON.stringify({
-      autosize: false,
-      symbol: symbol,
-      interval: 'D',
-      timezone: 'Etc/UTC',
-      theme: theme,
-      style: '2',
-      locale: 'en',
-      allow_symbol_change: true,
-      save_image: false,
-      support_host: 'https://www.tradingview.com',
-      width: '100%',
-      height: 300
-    })
+    // Load the main TradingView library
+    const mainScript = document.createElement('script')
+    mainScript.src = 'https://s3.tradingview.com/tv.js'
+    mainScript.async = true
 
-    containerRef.current.appendChild(script)
+    mainScript.onload = () => {
+      // Create the widget initialization script
+      const widgetScript = document.createElement('script')
+      widgetScript.type = 'text/javascript'
+      widgetScript.innerHTML = `
+        new TradingView.widget({
+          "autosize": true,
+          "symbol": "${symbol}",
+          "interval": "D",
+          "timezone": "Etc/UTC",
+          "theme": "${theme}",
+          "style": "2",
+          "locale": "en",
+          "toolbar_bg": "#f1f3f6",
+          "enable_publishing": false,
+          "allow_symbol_change": true,
+          "container_id": "${containerId}",
+          "height": 300,
+          "width": "100%"
+        });
+      `
+      
+      document.head.appendChild(widgetScript)
+    }
 
-    // Cleanup
+    document.head.appendChild(mainScript)
+
+    // Cleanup function
     return () => {
       if (containerRef.current) {
         containerRef.current.innerHTML = ''
       }
+      // Remove scripts from head
+      const scripts = document.head.querySelectorAll('script[src*="tradingview"], script:not([src])')
+      scripts.forEach(script => {
+        if (script.innerHTML.includes(containerId)) {
+          document.head.removeChild(script)
+        }
+      })
     }
   }, [symbol, theme])
 

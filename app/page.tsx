@@ -41,7 +41,7 @@ export default function FireplexityPage() {
   const [pendingQuery, setPendingQuery] = useState<string>('')
   const [mounted, setMounted] = useState(false)
 
-  // Fix for Next.js 15 workStore issue - ensure client-side only rendering
+  // Fix for hydration issues - ensure client-side only rendering
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -75,6 +75,8 @@ export default function FireplexityPage() {
 
   // Handle custom data from stream - only process new items
   useEffect(() => {
+    if (!mounted) return
+    
     if (data && Array.isArray(data)) {
       // Only process new items that haven't been processed before
       const newItems = data.slice(lastDataLength.current)
@@ -115,7 +117,7 @@ export default function FireplexityPage() {
       // Update the last processed length
       lastDataLength.current = data.length
     }
-  }, [data, messageData])
+  }, [data, messageData, mounted])
 
 
   // Check for environment variables on mount
@@ -225,10 +227,10 @@ export default function FireplexityPage() {
   // Don't render until mounted to avoid hydration issues
   if (!mounted) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">Loading...</p>
+          <p className="mt-2 text-gray-600">Loading...</p>
         </div>
       </div>
     )

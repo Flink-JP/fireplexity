@@ -18,12 +18,29 @@ import {
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
 import { ErrorDisplay } from '@/components/error-display'
+import dynamic from 'next/dynamic'
 
 interface MessageData {
   sources: SearchResult[]
   followUpQuestions: string[]
   ticker?: string
 }
+
+// Dynamically import the main component to avoid SSR issues
+const DynamicFireplexityPageContent = dynamic(
+  () => Promise.resolve(FireplexityPageContent),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading Fireplexity...</p>
+        </div>
+      </div>
+    )
+  }
+)
 
 function FireplexityPageContent() {
   const [sources, setSources] = useState<SearchResult[]>([])
@@ -356,8 +373,15 @@ function FireplexityPageContent() {
 
 export default function FireplexityPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <FireplexityPageContent />
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading Fireplexity...</p>
+        </div>
+      </div>
+    }>
+      <DynamicFireplexityPageContent />
     </Suspense>
   )
 }

@@ -29,6 +29,13 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    // Disable the problematic features that cause workStore issues
+    turbo: undefined,
+    serverComponentsExternalPackages: [],
+  },
+  // Force static generation to avoid SSR issues
+  output: undefined,
 };
 
 export default nextConfig;

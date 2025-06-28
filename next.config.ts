@@ -29,9 +29,13 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Disable experimental features that cause workStore issues
-  experimental: {},
-  // Force client-side rendering for problematic components
+  // Fix for workStore invariant error in Next.js 15
+  experimental: {
+    // Disable problematic experimental features
+    ppr: false,
+    reactCompiler: false,
+  },
+  // Ensure proper client/server boundary
   transpilePackages: [],
 };
 

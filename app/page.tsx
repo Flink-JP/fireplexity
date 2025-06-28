@@ -39,6 +39,12 @@ export default function FireplexityPage() {
   const [showApiKeyModal, setShowApiKeyModal] = useState<boolean>(false)
   const [, setIsCheckingEnv] = useState<boolean>(true)
   const [pendingQuery, setPendingQuery] = useState<string>('')
+  const [mounted, setMounted] = useState(false)
+
+  // Fix for Next.js 15 workStore issue - ensure client-side only rendering
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const { messages, input, handleInputChange, handleSubmit, isLoading, data } = useChat({
     api: '/api/fireplexity/search',
@@ -114,6 +120,8 @@ export default function FireplexityPage() {
 
   // Check for environment variables on mount
   useEffect(() => {
+    if (!mounted) return
+    
     const checkApiKey = async () => {
       try {
         const response = await fetch('/api/fireplexity/check-env')
@@ -137,7 +145,7 @@ export default function FireplexityPage() {
     }
     
     checkApiKey()
-  }, [])
+  }, [mounted])
 
   const handleApiKeySubmit = () => {
     if (firecrawlApiKey.trim()) {
@@ -212,6 +220,18 @@ export default function FireplexityPage() {
     setFollowUpQuestions([])
     setCurrentTicker(null)
     handleSubmit(e)
+  }
+
+  // Don't render until mounted to avoid hydration issues
+  if (!mounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    )
   }
 
   const isChatActive = hasSearched || messages.length > 0

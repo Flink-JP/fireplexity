@@ -162,7 +162,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                     {/* User message */}
                     {pair.user && (
                       <div>
-                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{pair.user.content}</h2>
+                        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">{pair.user.content}</h2>
                       </div>
                     )}
                     {pair.assistant && (
@@ -173,7 +173,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                             <div className="flex items-center justify-between mb-3">
                               <div className="flex items-center gap-2">
                                 <FileText className="h-4 w-4 text-yellow-500" />
-                                <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Sources</h2>
+                                <h2 className="text-sm font-medium text-gray-600 dark:text-gray-300">Sources</h2>
                               </div>
                               {messageSources.length > 5 && (
                                 <div className="flex items-center gap-1">
@@ -211,7 +211,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                                   href={result.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-200 hover:shadow-md opacity-0 animate-fade-up h-28"
+                                  className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-500 transition-all duration-200 hover:shadow-md opacity-0 animate-fade-up h-28"
                                   style={{
                                     animationDelay: `${300 + idx * 30}ms`,
                                     animationDuration: '400ms',
@@ -235,14 +235,14 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                                     </div>
                                   )}
                                   
-                                  {/* Gradient overlay - lighter for visibility */}
-                                  <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/70 to-white/50 dark:from-zinc-800/90 dark:via-zinc-800/70 dark:to-zinc-800/50" />
+                                  {/* Gradient overlay - improved for dark mode */}
+                                  <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/80 to-white/60 dark:from-zinc-800/95 dark:via-zinc-800/80 dark:to-zinc-800/60" />
                                   
                                   {/* Content */}
                                   <div className="relative p-3 flex flex-col justify-between h-full">
                                     {/* Favicon and domain */}
                                     <div className="flex items-center gap-1.5">
-                                      <div className="flex-shrink-0 w-4 h-4 bg-white/80 dark:bg-zinc-700/80 rounded flex items-center justify-center overflow-hidden">
+                                      <div className="flex-shrink-0 w-4 h-4 bg-white/90 dark:bg-zinc-700/90 rounded flex items-center justify-center overflow-hidden">
                                         {result.favicon ? (
                                           <Image
                                             src={result.favicon}
@@ -256,18 +256,18 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                                             }}
                                           />
                                         ) : (
-                                          <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <svg className="w-2.5 h-2.5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                                           </svg>
                                         )}
                                       </div>
-                                      <p className="text-[10px] text-gray-600 dark:text-gray-300 truncate flex-1 font-medium">
+                                      <p className="text-[10px] text-gray-600 dark:text-gray-200 truncate flex-1 font-medium">
                                         {result.siteName || new URL(result.url).hostname.replace('www.', '')}
                                       </p>
                                     </div>
                                     
                                     {/* Title */}
-                                    <h3 className="font-medium text-xs text-gray-900 dark:text-white line-clamp-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-tight">
+                                    <h3 className="font-medium text-xs text-gray-900 dark:text-gray-100 line-clamp-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-tight">
                                       {result.title}
                                     </h3>
                                     
@@ -298,12 +298,12 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center gap-2">
                               <Sparkles className="h-4 w-4 text-orange-500" />
-                              <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Answer</h2>
+                              <h2 className="text-sm font-medium text-gray-600 dark:text-gray-300">Answer</h2>
                             </div>
                             <div className="flex items-center gap-1">
                               <button
                                 onClick={() => handleCopy(pair.assistant?.content || '', `message-${pairIndex}`)}
-                                className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+                                className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors"
                                 title={copiedMessageId === `message-${pairIndex}` ? "Copied!" : "Copy response"}
                               >
                                 {copiedMessageId === `message-${pairIndex}` ? (
@@ -327,14 +327,14 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                           <div className="opacity-0 animate-fade-up [animation-duration:300ms] [animation-fill-mode:forwards] mt-6">
                             <div className="flex items-center gap-2 mb-3">
                               <Sparkles className="h-4 w-4 text-red-500" />
-                              <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Related</h2>
+                              <h2 className="text-sm font-medium text-gray-600 dark:text-gray-300">Related</h2>
                             </div>
                             <div className="space-y-2">
                               {messageFollowUpQuestions.map((question, qIndex) => (
                                 <button
                                   key={qIndex}
                                   onClick={() => handleFollowUpClick(question)}
-                                  className="w-full text-left p-2 bg-white dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-200 hover:shadow-md group opacity-0 animate-fade-up"
+                                  className="w-full text-left p-2 bg-white dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-500 transition-all duration-200 hover:shadow-md group opacity-0 animate-fade-up"
                                   style={{
                                     animationDelay: `${qIndex * 50}ms`,
                                     animationDuration: '300ms',
@@ -343,7 +343,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                                 >
                                   <div className="flex items-center gap-2">
                                     <Plus className="h-4 w-4 text-gray-400 group-hover:text-orange-500 transition-colors flex-shrink-0" />
-                                    <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                                    <span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
                                       {question}
                                     </span>
                                   </div>
@@ -364,14 +364,14 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
           {/* Current Query display */}
           {query && (messages.length <= 2 || messages[messages.length - 1]?.role === 'user' || messages[messages.length - 1]?.role === 'assistant') && (
             <div className="opacity-0 animate-fade-up [animation-duration:500ms] [animation-fill-mode:forwards]">
-              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">{query}</h1>
+              <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-6">{query}</h1>
             </div>
           )}
 
           {/* Status message */}
           {searchStatus && (
             <div className="opacity-0 animate-fade-up [animation-duration:300ms] [animation-fill-mode:forwards] mb-4">
-              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+              <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                 <Loader2 className="h-4 w-4 animate-spin" />
                 <span>{searchStatus}</span>
               </div>
@@ -384,7 +384,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <FileText className="h-4 w-4 text-yellow-500" />
-                  <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Sources</h2>
+                  <h2 className="text-sm font-medium text-gray-600 dark:text-gray-300">Sources</h2>
                 </div>
                 {sources.length > 5 && (
                   <div className="flex items-center gap-1">
@@ -422,7 +422,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                     href={result.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-200 hover:shadow-md opacity-0 animate-fade-up h-28"
+                    className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-500 transition-all duration-200 hover:shadow-md opacity-0 animate-fade-up h-28"
                     style={{
                       animationDelay: `${300 + index * 30}ms`,
                       animationDuration: '400ms',
@@ -446,14 +446,14 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                       </div>
                     )}
                     
-                    {/* Gradient overlay - lighter for visibility */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/70 to-white/50 dark:from-zinc-800/90 dark:via-zinc-800/70 dark:to-zinc-800/50" />
+                    {/* Gradient overlay - improved for dark mode */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/80 to-white/60 dark:from-zinc-800/95 dark:via-zinc-800/80 dark:to-zinc-800/60" />
                     
                     {/* Content */}
                     <div className="relative p-3 flex flex-col justify-between h-full">
                       {/* Favicon and domain */}
                       <div className="flex items-center gap-1.5">
-                        <div className="flex-shrink-0 w-4 h-4 bg-white/80 dark:bg-zinc-700/80 rounded flex items-center justify-center overflow-hidden">
+                        <div className="flex-shrink-0 w-4 h-4 bg-white/90 dark:bg-zinc-700/90 rounded flex items-center justify-center overflow-hidden">
                           {result.favicon ? (
                             <Image
                               src={result.favicon}
@@ -467,18 +467,18 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                               }}
                             />
                           ) : (
-                            <svg className="w-2.5 h-2.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                            <svg className="w-2.5 h-2.5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 919-9" />
                             </svg>
                           )}
                         </div>
-                        <p className="text-[10px] text-gray-600 dark:text-gray-300 truncate flex-1 font-medium">
+                        <p className="text-[10px] text-gray-600 dark:text-gray-200 truncate flex-1 font-medium">
                           {result.siteName || new URL(result.url).hostname.replace('www.', '')}
                         </p>
                       </div>
                       
                       {/* Title */}
-                      <h3 className="font-medium text-xs text-gray-900 dark:text-white line-clamp-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-tight">
+                      <h3 className="font-medium text-xs text-gray-900 dark:text-gray-100 line-clamp-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-tight">
                         {result.title}
                       </h3>
                       
@@ -510,13 +510,13 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-orange-500" />
-                  <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Answer</h2>
+                  <h2 className="text-sm font-medium text-gray-600 dark:text-gray-300">Answer</h2>
                 </div>
                 {!isLoading && (
                   <div className="flex items-center gap-1 opacity-0 animate-fade-in [animation-duration:300ms] [animation-delay:200ms] [animation-fill-mode:forwards]">
                     <button
                       onClick={() => handleCopy(messages[messages.length - 1].content || '', 'current-message')}
-                      className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+                      className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors"
                       title={copiedMessageId === 'current-message' ? "Copied!" : "Copy response"}
                     >
                       {copiedMessageId === 'current-message' ? (
@@ -527,7 +527,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                     </button>
                     <button
                       onClick={handleRewrite}
-                      className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
+                      className="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors"
                       title="Rewrite response"
                     >
                       <RefreshCw className="h-3.5 w-3.5" />
@@ -536,7 +536,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                 )}
               </div>
               <div>
-                <div className="prose prose-gray max-w-none dark:prose-invert prose-p:leading-relaxed prose-pre:bg-gray-100 dark:prose-pre:bg-zinc-900">
+                <div className="prose prose-gray max-w-none dark:prose-invert prose-p:leading-relaxed prose-pre:bg-gray-100 dark:prose-pre:bg-zinc-800">
                   <MarkdownRenderer 
                     content={messages[messages.length - 1].content || ''}
                     sources={sources}
@@ -551,7 +551,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
             <div className="opacity-0 animate-fade-up [animation-duration:500ms] [animation-fill-mode:forwards]">
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles className="h-4 w-4 text-orange-500" />
-                <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Answer</h2>
+                <h2 className="text-sm font-medium text-gray-600 dark:text-gray-300">Answer</h2>
               </div>
               <div>
                 <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
@@ -567,14 +567,14 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
             <div className="opacity-0 animate-fade-up [animation-duration:300ms] [animation-fill-mode:forwards]">
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles className="h-4 w-4 text-red-500" />
-                <h2 className="text-sm font-medium text-gray-600 dark:text-gray-400">Related</h2>
+                <h2 className="text-sm font-medium text-gray-600 dark:text-gray-300">Related</h2>
               </div>
               <div className="space-y-2">
                 {followUpQuestions.map((question, index) => (
                   <button
                     key={index}
                     onClick={() => handleFollowUpClick(question)}
-                    className="w-full text-left p-2 bg-white dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600 transition-all duration-200 hover:shadow-md group opacity-0 animate-fade-up"
+                    className="w-full text-left p-2 bg-white dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-gray-600 hover:border-orange-300 dark:hover:border-orange-500 transition-all duration-200 hover:shadow-md group opacity-0 animate-fade-up"
                     style={{
                       animationDelay: `${index * 50}ms`,
                       animationDuration: '300ms',
@@ -583,7 +583,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                   >
                     <div className="flex items-center gap-2">
                       <Plus className="h-4 w-4 text-gray-400 group-hover:text-orange-500 transition-colors flex-shrink-0" />
-                      <span className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                      <span className="text-sm text-gray-700 dark:text-gray-200 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
                         {question}
                       </span>
                     </div>
@@ -602,7 +602,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
       <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white/95 dark:from-zinc-900 dark:via-zinc-900/95 to-transparent pt-6 pb-6 z-10">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <form onSubmit={handleFormSubmit} ref={formRef}>
-            <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-3 focus-within:border-gray-900 dark:focus-within:border-gray-100 transition-colors">
+            <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-600 p-3 focus-within:border-gray-900 dark:focus-within:border-gray-300 transition-colors">
               <div className="flex items-end gap-2">
                 <Textarea
                   value={input}
@@ -614,7 +614,7 @@ export function ChatInterface({ messages, sources, followUpQuestions, searchStat
                     }
                   }}
                   placeholder="Ask a follow-up question..."
-                  className="resize-none border-0 focus:ring-0 focus:outline-none bg-transparent placeholder:text-gray-400 dark:placeholder:text-gray-500 px-4 py-2 pr-2 shadow-none focus-visible:ring-0 focus-visible:border-0"
+                  className="resize-none border-0 focus:ring-0 focus:outline-none bg-transparent placeholder:text-gray-400 dark:placeholder:text-gray-500 px-4 py-2 pr-2 shadow-none focus-visible:ring-0 focus-visible:border-0 text-gray-900 dark:text-gray-100"
                   rows={1}
                   style={{
                     minHeight: '36px',

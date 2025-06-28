@@ -39,7 +39,7 @@ export function CharacterCounter({ targetCount, duration = 2000 }: CharacterCoun
   }, [targetCount, duration])
 
   return (
-    <span className="font-mono text-[10px] text-gray-500 dark:text-gray-400">
+    <span className="font-mono text-[10px] text-gray-500 dark:text-gray-300">
       {count.toLocaleString()} chars
     </span>
   )

@@ -227,10 +227,10 @@ export default function FireplexityPage() {
   // Don't render until mounted to avoid hydration issues
   if (!mounted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-zinc-900">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Loading...</p>
+          <p className="mt-2 text-gray-600 dark:text-gray-300">Loading...</p>
         </div>
       </div>
     )
@@ -239,7 +239,7 @@ export default function FireplexityPage() {
   const isChatActive = hasSearched || messages.length > 0
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-zinc-900">
       {/* Header with logo - matching other pages */}
       <header className="px-4 sm:px-6 lg:px-8 py-1 mt-2">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
@@ -338,10 +338,10 @@ export default function FireplexityPage() {
       
       {/* API Key Modal */}
       <Dialog open={showApiKeyModal} onOpenChange={setShowApiKeyModal}>
-        <DialogContent>
+        <DialogContent className="bg-white dark:bg-zinc-800 border-gray-200 dark:border-gray-600">
           <DialogHeader>
-            <DialogTitle>Firecrawl API Key Required</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-gray-900 dark:text-gray-100">Firecrawl API Key Required</DialogTitle>
+            <DialogDescription className="text-gray-600 dark:text-gray-300">
               To use Fireplexity search, you need a Firecrawl API key. Get one for free at{' '}
               <a 
                 href="https://www.firecrawl.dev" 
@@ -364,7 +364,7 @@ export default function FireplexityPage() {
                   handleApiKeySubmit()
                 }
               }}
-              className="h-12"
+              className="h-12 bg-white dark:bg-zinc-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100"
             />
             <Button onClick={handleApiKeySubmit} variant="orange" className="w-full">
               Save API Key

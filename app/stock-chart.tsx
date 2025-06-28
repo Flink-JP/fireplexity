@@ -35,7 +35,7 @@ export function StockChart({ ticker, theme = 'light' }: StockChartProps) {
 
   return (
     <div className="mb-6 w-full">
-      <TradingViewWidget symbol={ticker} theme={theme} />
+      <TradingViewWidget key={ticker} symbol={ticker} theme={theme} />
     </div>
   )
 }
